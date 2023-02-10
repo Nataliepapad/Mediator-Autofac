@@ -1,10 +1,10 @@
 ﻿namespace MediatorAutofac.Time.Writters
 {
-	public class ShortDateWritter : IDateWritter
+	public class OnlyTimeWritter : IDateWritter
 	{
 		public void Write(DateTime date)
 		{
-			Console.WriteLine(date.ToString());
+			Console.WriteLine(date.ToLongTimeString());
 		}
 	}
 }

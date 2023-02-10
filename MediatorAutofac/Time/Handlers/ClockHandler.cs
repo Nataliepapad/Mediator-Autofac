@@ -1,22 +1,29 @@
-﻿using MediatorAutofac.Ping;
-using MediatorAutofac.Time.Clocks;
+﻿using Autofac.Features.Indexed;
+using MediatorAutofac.Time.Requests;
+using MediatorAutofac.Time.TimeZones;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MediatorAutofac.Time.Handlers
 {
-    public class ClockHandler : IRequestHandler<ClockRequest, string>
-    {
 
-        public ClockHandler() { }
+	// We implement IRequestHandler in order to handle the command/queries (in this case "ClockRequest"), followed by the output
+	public class ClockHandler : IRequestHandler<ClockRequest, Unit>
+	{
+		private readonly IIndex<string, ITimeZoneWritter> _timeZones;
 
-        public Task<string> Handle(ClockRequest request, CancellationToken cancellationToken)
-        {
-            return Task.FromResult("Testing clock");
-        }
-    }
+		public ClockHandler(IIndex<string, ITimeZoneWritter> timeZones)
+		{
+			_timeZones = timeZones;
+		}
+
+		// In the Handle we pass our request 
+		// The cancellation token is because everything in the MediatR is async
+		public Task<Unit> Handle(ClockRequest clockRequest, CancellationToken ct)
+		{
+			if (_timeZones.TryGetValue(clockRequest.Country, out ITimeZoneWritter timeZones))
+				timeZones.PrintTimeZone(clockRequest.Country);
+
+			return Unit.Task;
+		}
+	}
 }
