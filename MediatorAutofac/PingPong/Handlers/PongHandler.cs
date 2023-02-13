@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using MediatorAutofac.Ping;
+using MediatorAutofac.PingPong.Ping;
 using MediatR;
 
-namespace MediatorAutofac.Handlers
+namespace MediatorAutofac.PingPong.Handlers
 {
 	public class PongHandler : INotificationHandler<PingNotification>
 	{

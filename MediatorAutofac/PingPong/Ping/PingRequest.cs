@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MediatorAutofac.Ping
+namespace MediatorAutofac.PingPong.Ping
 {
 	public class PingRequest : IRequest<string> { }
 

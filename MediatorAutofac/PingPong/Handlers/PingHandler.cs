@@ -1,7 +1,7 @@
-﻿using MediatorAutofac.Ping;
+﻿using MediatorAutofac.PingPong.Ping;
 using MediatR;
 
-namespace MediatorAutofac.Handlers
+namespace MediatorAutofac.PingPong.Handlers
 {
 	public class PingHandler : IRequestHandler<PingRequest, string>
 	{
