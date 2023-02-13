@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using MediatorAutofac.Time.Clocks;
 using NodaTime.TimeZones;
 
@@ -17,11 +18,26 @@ namespace MediatorAutofac.Time.TimeZones
 
 		public void PrintTimeZone(string countryCode)
 		{
-			TimeZoneInfo targetTimeZone = TimeZoneInfo.FindSystemTimeZoneById(_timezoneId);
+			var sw = Stopwatch.StartNew();
 
-			DateTime targetTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, targetTimeZone);
+			sw.Start();
+			try
+			{
+				TimeZoneInfo targetTimeZone = TimeZoneInfo.FindSystemTimeZoneById(_timezoneId);
 
-			_iclock.PrintDateTime(targetTime);
+				DateTime targetTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, targetTimeZone);
+
+				_iclock.PrintDateTime(targetTime);
+			} catch { }
+
+			sw.Stop();
+			var ticks = sw.ElapsedTicks;
+			var time = sw.ElapsedMilliseconds;
+			var timeStamp = new DateTime(Stopwatch.GetTimestamp());
+
+			Console.WriteLine(ticks);
+			Console.WriteLine(time);
+			Console.WriteLine(timeStamp);
 		}
 	}
 }

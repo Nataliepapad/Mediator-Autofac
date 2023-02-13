@@ -14,4 +14,8 @@
     <PackageReference Include="NodaTime" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Time\TimeZones\test\" />
+  </ItemGroup>
+
 </Project>
